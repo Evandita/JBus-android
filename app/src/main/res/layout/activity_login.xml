@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:accessibilityLiveRegion="none"
+    android:background="#F4F4F4"
+    android:backgroundTint="#FFFFFF"
+    android:divider="@drawable/ic_launcher_foreground"
+    android:fadingEdge="horizontal|vertical"
+    android:gravity="top"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/HighTierHuman"
+        android:layout_width="match_parent"
+        android:layout_height="201dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/download" />
+
+    <TextView
+        android:id="@+id/JBus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#98CAF3"
+        android:gravity="center"
+        android:padding="16dp"
+        android:rotationX="-20"
+        android:text="U should use JBus NOW"
+        android:textColor="#FBFFFF"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="Password" />
+
+    <ImageButton
+        android:id="@+id/login_button"
+        style="@android:style/Widget.ImageButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/login_button" />
+
+
+</LinearLayout>
+
