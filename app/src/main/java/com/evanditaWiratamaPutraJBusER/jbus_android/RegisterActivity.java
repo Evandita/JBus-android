@@ -4,9 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.animation.*;
-import android.widget.*;
 import android.os.Bundle;
+import android.os.TestLooperManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -15,25 +19,26 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        // Load the animation
-        Animation spinAnimation = AnimationUtils.loadAnimation(this, R.anim.text_anim);
+        getSupportActionBar().hide();
 
-        // Find views
-        TextView textTitle = findViewById(R.id.register_title);
-        EditText editTextUsername = findViewById(R.id.register_username);
-        Button btnRegister = findViewById(R.id.btnRegister);
-
-        // Apply animation to views
-
-
-        btnRegister.setOnClickListener(v -> {
-            textTitle.startAnimation(spinAnimation);
+        Button login = findViewById(R.id.register_login);
+        login.setOnClickListener(v -> {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
 
+        Button register = findViewById(R.id.register_register);
+        register.setOnClickListener(v -> {
+            viewToast(this, "Account Registered");
+        });
     }
-
     private void moveActivity(Context ctx, Class<?> cls) {
         Intent intent = new Intent(ctx,cls);
         startActivity(intent);
+    }
+
+    private void viewToast(Context ctx, String message) {
+        Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show();
     }
 }

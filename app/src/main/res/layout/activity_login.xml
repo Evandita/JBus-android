@@ -1,71 +1,105 @@
-<?xml version="1.0" encoding="utf-8" ?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:accessibilityLiveRegion="none"
-    android:background="#F4F4F4"
-    android:backgroundTint="#FFFFFF"
-    android:divider="@drawable/ic_launcher_foreground"
-    android:fadingEdge="horizontal|vertical"
-    android:gravity="top"
+    android:background="@drawable/gradient_bg2"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
-    <ImageView
-        android:id="@+id/HighTierHuman"
-        android:layout_width="match_parent"
-        android:layout_height="201dp"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/download" />
 
     <TextView
-        android:id="@+id/JBus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#98CAF3"
-        android:gravity="center"
-        android:padding="16dp"
-        android:rotationX="-20"
-        android:text="U should use JBus NOW"
-        android:textColor="#FBFFFF"
+        android:id="@+id/login_title"
+        android:layout_width="306dp"
+        android:layout_height="76dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="200dp"
+        android:fontFamily="@font/chau_philomene_one"
+        android:text="LOGIN"
+        android:textAlignment="center"
+        android:textColor="#F7FEFF"
         android:textSize="34sp"
-        android:textStyle="bold" />
+        tools:text="J BUS" />
+
 
     <EditText
-        android:id="@+id/login_email"
-        android:layout_width="match_parent"
+        android:id="@+id/login_username"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="Email" />
+        android:layout_gravity="center"
+        android:background="@android:drawable/divider_horizontal_bright"
+        android:backgroundTint="#FFFFFF"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textColorHint="#F7FEFF" />
+
 
     <EditText
         android:id="@+id/login_password"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:backgroundTint="#FFFFFF"
+        android:background="@android:drawable/divider_horizontal_bright"
+        android:padding="10dp"
         android:inputType="textPassword"
-        android:hint="Password" />
-
-    <ImageButton
-        android:id="@+id/login_button"
-        style="@android:style/Widget.ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="255dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/login_button" />
+        android:textColorHint="#F7FEFF"
+        android:hint="Password"/>
 
     <Button
-        android:id="@+id/login_register_now_button"
-        style="@style/Widget.Material3.Button.IconButton.Outlined"
-        android:layout_width="match_parent"
-        android:layout_height="95dp"
-        android:fontFamily="sans-serif-black"
-        android:text="REGISTER NOW"
-        android:textSize="24sp"
-        android:typeface="sans" />
+        android:id="@+id/login_login"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/cagliostro"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:text="LOGIN"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:cornerRadius="21dp" />
+
+    <TextView
+        android:layout_width="353dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:text="Don't have an account?"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF" />
+
+
+    <Button
+        android:id="@+id/login_register"
+
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="208dp"
+        android:layout_height="50dp"
+
+        android:layout_gravity="center"
+        android:backgroundTint="#FBFBFB"
+        android:fontFamily="@font/aclonica"
+        android:paddingHorizontal="20dp"
+        android:text="Register Now"
+        android:textColor="#824AE4"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+
+
+
+
 
 
 </LinearLayout>
-
