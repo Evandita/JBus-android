@@ -35,14 +35,14 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/login_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:hint="Email" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
@@ -52,9 +52,19 @@
         android:id="@+id/login_button"
         style="@android:style/Widget.ImageButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="255dp"
         android:scaleType="fitXY"
         android:src="@drawable/login_button" />
+
+    <Button
+        android:id="@+id/login_register_now_button"
+        style="@style/Widget.Material3.Button.IconButton.Outlined"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:fontFamily="sans-serif-black"
+        android:text="REGISTER NOW"
+        android:textSize="24sp"
+        android:typeface="sans" />
 
 
 </LinearLayout>

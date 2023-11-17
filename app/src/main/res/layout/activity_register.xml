@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/register_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register Account"
+        android:textSize="24sp"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Add other input fields (e.g., password, email) as needed -->
+
+    <EditText
+        android:id="@+id/register_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_title"
+        android:layout_marginTop="156dp"
+        android:hint="Username" />
+
+    <EditText
+        android:id="@+id/register_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_title"
+        android:layout_marginTop="209dp"
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/register_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_title"
+        android:layout_marginTop="102dp"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_username"
+        android:layout_marginTop="67dp"
+        android:text="Register" />
+
+</RelativeLayout>
