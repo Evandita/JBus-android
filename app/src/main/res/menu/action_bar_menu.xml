@@ -19,3 +19,4 @@
         android:title="Balance"
         app:showAsAction="collapseActionView|always"/>
 </menu>
+

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JBus-android</string>
+    <string name="app_name">J Bus</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="prompt_email">Email</string>
