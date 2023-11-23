@@ -7,7 +7,17 @@ import android.widget.*;
 import android.os.*;
 import android.view.animation.*;
 
+import com.evanditaWiratamaPutraJBusER.jbus_android.model.Account;
+import com.evanditaWiratamaPutraJBusER.jbus_android.request.BaseApiService;
+import com.evanditaWiratamaPutraJBusER.jbus_android.request.UtilsApi;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
 public class LoginActivity extends AppCompatActivity {
+    BaseApiService mApiService;
+    private Context ctx;
     private LinearLayout linearLayout;
     private Handler handler;
     private int currentImageIndex = 0;
@@ -47,7 +57,8 @@ public class LoginActivity extends AppCompatActivity {
         login = findViewById(R.id.login_login);
         account = findViewById(R.id.login_account);
         register = findViewById(R.id.login_register);
-
+        mApiService = UtilsApi.getApiService();
+        ctx = this;
         animationIn();
 
         register.setOnClickListener(v -> {
@@ -68,6 +79,26 @@ public class LoginActivity extends AppCompatActivity {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         });
+    }
+
+    protected Account requestAccount(){
+        mApiService.getAccountbyId(0).enqueue(new Callback<Account>() {
+            @Override
+            public void onResponse(Call<Account> call, Response<Account> response) {
+                if(response.isSuccessful()){
+                    Account account;
+                    account = response.body();
+                    System.out.println(account.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Account> call, Throwable t) {
+                System.out.println("2");
+                Toast.makeText(ctx, "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return null;
     }
 
     public void onBackPressed() {
