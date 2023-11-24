@@ -18,12 +18,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.*;
 
+import com.evanditaWiratamaPutraJBusER.jbus_android.model.Account;
+import com.evanditaWiratamaPutraJBusER.jbus_android.model.BaseResponse;
+import com.evanditaWiratamaPutraJBusER.jbus_android.request.BaseApiService;
+import com.evanditaWiratamaPutraJBusER.jbus_android.request.UtilsApi;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private LinearLayout linearLayout;
     private Handler handler;
     private int currentImageIndex = 0;
-    private int[] gradientImages = { R.drawable.gradient_bg2, R.drawable.gradient_bg2_3, R.drawable.gradient_bg2_4, R.drawable.gradient_bg2_2};
+    private int[] gradientImages = {R.drawable.gradient_bg2, R.drawable.gradient_bg2_3, R.drawable.gradient_bg2_4, R.drawable.gradient_bg2_2};
     private static final int FADE_DURATION = 3000;
 
     private Animation slideInLeft;
@@ -38,6 +47,9 @@ public class RegisterActivity extends AppCompatActivity {
     private Button register;
     private TextView account;
     private Button login;
+    private BaseApiService mApiService;
+    private Context ctx;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
         register = findViewById(R.id.register_register);
         account = findViewById(R.id.register_account);
         login = findViewById(R.id.register_login);
+        mApiService = UtilsApi.getApiService();
+        ctx = this;
 
         animationIn();
 
@@ -73,7 +87,8 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         register.setOnClickListener(v -> {
-            viewToast(this, "Account Registered");
+            handleRegister();
+
         });
     }
 
@@ -117,7 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void moveActivity(Context ctx, Class<?> cls) {
-        Intent intent = new Intent(ctx,cls);
+        Intent intent = new Intent(ctx, cls);
         startActivity(intent);
     }
 
@@ -143,5 +158,41 @@ public class RegisterActivity extends AppCompatActivity {
         register.startAnimation(slideOutRight);
         account.startAnimation(slideOutLeft);
         login.startAnimation(slideOutRight);
+    }
+
+    protected void handleRegister() {
+    // handling empty field
+        String nameS = username.getText().toString();
+        String emailS = email.getText().toString();
+        String passwordS = password.getText().toString();
+        if (nameS.isEmpty() || emailS.isEmpty() || passwordS.isEmpty()) {
+            Toast.makeText(ctx, "Field cannot be empty",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mApiService.register(nameS, emailS, passwordS).enqueue(new Callback<BaseResponse<Account>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<Account>> call, Response<BaseResponse<Account>> response) {
+                // handle the potential 4xx & 5xx error
+                if (!response.isSuccessful()) {
+                    Toast.makeText(ctx, "Application error " +
+                            response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                BaseResponse<Account> res = response.body();
+                // if success finish this activity (back to login activity)
+                Toast.makeText(ctx, res.message, Toast.LENGTH_SHORT).show();
+                if (res.success){
+                    finish();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<Account>> call, Throwable t) {
+                Toast.makeText(ctx, "Problem with the server",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

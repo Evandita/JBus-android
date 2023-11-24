@@ -8,6 +8,7 @@ import android.os.*;
 import android.view.animation.*;
 
 import com.evanditaWiratamaPutraJBusER.jbus_android.model.Account;
+import com.evanditaWiratamaPutraJBusER.jbus_android.model.BaseResponse;
 import com.evanditaWiratamaPutraJBusER.jbus_android.request.BaseApiService;
 import com.evanditaWiratamaPutraJBusER.jbus_android.request.UtilsApi;
 import retrofit2.Call;
@@ -16,8 +17,7 @@ import retrofit2.Response;
 
 
 public class LoginActivity extends AppCompatActivity {
-    BaseApiService mApiService;
-    private Context ctx;
+
     private LinearLayout linearLayout;
     private Handler handler;
     private int currentImageIndex = 0;
@@ -30,12 +30,16 @@ public class LoginActivity extends AppCompatActivity {
     private Animation slideOutRight;
 
     private TextView title;
-    private EditText username;
+    private EditText email;
     private EditText password;
     private Button login;
     private TextView account;
     private Button register;
+    public static Account loggedAccount;
+    private BaseApiService mApiService;
+    private Context ctx;
 
+    private Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,53 +56,74 @@ public class LoginActivity extends AppCompatActivity {
         animateBackground();
 
         title = findViewById(R.id.login_title);
-        username = findViewById(R.id.login_username);
+        email = findViewById(R.id.login_email);
         password = findViewById(R.id.login_password);
         login = findViewById(R.id.login_login);
         account = findViewById(R.id.login_account);
         register = findViewById(R.id.login_register);
         mApiService = UtilsApi.getApiService();
         ctx = this;
+        intent = new Intent(this, MainActivity.class);
         animationIn();
 
         register.setOnClickListener(v -> {
             animationOut();
-
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent);
+            Intent intentR = new Intent(this, RegisterActivity.class);
+            startActivity(intentR);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         });
 
 
         login.setOnClickListener(v -> {
-            animationOut();
 
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            handleLogin();
+
 
         });
     }
 
-    protected Account requestAccount(){
-        mApiService.getAccountbyId(0).enqueue(new Callback<Account>() {
+    protected void handleLogin() {
+        // handling empty field
+        String emailS = email.getText().toString();
+        String passwordS = password.getText().toString();
+        if (emailS.isEmpty() || passwordS.isEmpty()) {
+            Toast.makeText(ctx, "Field cannot be empty",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mApiService.login(emailS, passwordS).enqueue(new Callback<BaseResponse<Account>>() {
             @Override
-            public void onResponse(Call<Account> call, Response<Account> response) {
-                if(response.isSuccessful()){
-                    Account account;
-                    account = response.body();
-                    System.out.println(account.toString());
+            public void onResponse(Call<BaseResponse<Account>> call, Response<BaseResponse<Account>> response) {
+                // handle the potential 4xx & 5xx error
+                if (!response.isSuccessful()) {
+                    Toast.makeText(ctx, "Application error " +
+                            response.code(), Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                BaseResponse<Account> res = response.body();
+                loggedAccount = res.payload;
+                // if success finish this activity (back to login activity)
+
+                if (res.success){
+                    finish();
+                    Toast.makeText(ctx, "welcome", Toast.LENGTH_SHORT).show();
+                    animationOut();
+                    startActivity(intent);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                }
+                else {
+                    Toast.makeText(ctx, res.message, Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
-            public void onFailure(Call<Account> call, Throwable t) {
-                System.out.println("2");
-                Toast.makeText(ctx, "Failed", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<BaseResponse<Account>> call, Throwable t) {
+                Toast.makeText(ctx, "Problem with the server",
+                        Toast.LENGTH_SHORT).show();
             }
         });
-        return null;
     }
 
     public void onBackPressed() {
@@ -148,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void animationIn() {
         title.startAnimation(slideInLeft);
-        username.startAnimation(slideInRight);
+        email.startAnimation(slideInRight);
         password.startAnimation(slideInLeft);
         login.startAnimation(slideInRight);
         account.startAnimation(slideInLeft);
@@ -157,7 +182,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void animationOut() {
         title.startAnimation(slideOutRight);
-        username.startAnimation(slideOutLeft);
+        email.startAnimation(slideOutLeft);
         password.startAnimation(slideOutRight);
         login.startAnimation(slideOutLeft);
         account.startAnimation(slideOutRight);

@@ -25,14 +25,14 @@
 
 
     <EditText
-        android:id="@+id/login_username"
+        android:id="@+id/login_email"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@android:drawable/divider_horizontal_bright"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:hint="Username"
+        android:hint="Email"
         android:inputType="text"
         android:padding="10dp"
         android:textColor="#FFFFFF"

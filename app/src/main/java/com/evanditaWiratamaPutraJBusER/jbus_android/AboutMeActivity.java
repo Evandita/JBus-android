@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
@@ -47,6 +48,10 @@ public class AboutMeActivity extends AppCompatActivity {
         username.startAnimation(slideInRight);
         email.startAnimation(slideInRight);
         balance.startAnimation(slideInRight);
+
+        username.setText(LoginActivity.loggedAccount.name.toString());
+        email.setText(LoginActivity.loggedAccount.email.toString());
+
 
         currentImageIndex = 0;
         linearLayout = findViewById(R.id.about_page);
