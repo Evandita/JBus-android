@@ -21,4 +21,10 @@ public interface BaseApiService {
     Call<BaseResponse<Account>> login(
             @Query("email") String email,
             @Query("password") String password);
+
+    @POST("account/{id}/topUp")
+    Call<BaseResponse<Account>> topUp (
+        @Path("id") int id,
+        @Query("amount") double amount
+    );
 }

@@ -106,8 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                 // if success finish this activity (back to login activity)
 
                 if (res.success){
-                    finish();
-                    Toast.makeText(ctx, "welcome", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ctx, res.message, Toast.LENGTH_SHORT).show();
                     animationOut();
                     startActivity(intent);
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
