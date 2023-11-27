@@ -1,6 +1,7 @@
 package com.evanditaWiratamaPutraJBusER.jbus_android;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import android.view.Gravity;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
@@ -44,6 +46,10 @@ public class AboutMeActivity extends AppCompatActivity {
     private Button topUp;
     private BaseApiService mApiService;
     private Context ctx;
+    private LinearLayout box;
+    private TextView boxText;
+    private Button boxButton;
+    private Intent intentR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +66,7 @@ public class AboutMeActivity extends AppCompatActivity {
         email = findViewById(R.id.about_email);
         balance = findViewById(R.id.about_balance);
 
-        initial.startAnimation(rotate);
-        username.startAnimation(slideInRight);
-        email.startAnimation(slideInRight);
-        balance.startAnimation(slideInRight);
+        inAnimation();
 
         username.setText(LoginActivity.loggedAccount.name.toString());
         email.setText(LoginActivity.loggedAccount.email.toString());
@@ -84,6 +87,39 @@ public class AboutMeActivity extends AppCompatActivity {
             handleTopUp();
         });
 
+        box = findViewById(R.id.about_box);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(700,  150);
+
+        boxText = new TextView(this);
+        boxText.setGravity(Gravity.CENTER);
+        boxText.setTextColor(getResources().getColor(R.color.white));
+
+        boxButton = new Button(this);
+        boxButton.setGravity(Gravity.CENTER);
+        boxButton.setBackgroundColor(getResources().getColor(android.R.color.black));
+        boxButton.setTextColor(getResources().getColor(android.R.color.white));
+        boxButton.setTypeface(ResourcesCompat.getFont(this, R.font.hammersmith_one));
+        boxButton.setBackgroundResource(R.drawable.rounded_background2);
+
+        box.addView(boxText, lp);
+        box.addView(boxButton, lp);
+
+        if (LoginActivity.loggedAccount.company == null) {
+            intentR = new Intent(this, RegisterRenterActivity.class);
+            boxText.setText("You're not registered as a RENTER!");
+            boxButton.setText("Register Company");
+        }
+        else {
+            intentR = new Intent(this, ManageBusActivity.class);
+            boxText.setText("You're already registered as a RENTER!");
+            boxButton.setText("Manage Bus");
+        }
+
+        boxButton.setOnClickListener(v -> {
+            outAnimation();
+            startActivity(intentR);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
     }
 
     private void animateBackground() {
@@ -147,10 +183,7 @@ public class AboutMeActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        initial.startAnimation(rotate);
-        username.startAnimation(slideOutRight);
-        email.startAnimation(slideOutRight);
-        balance.startAnimation(slideOutRight);
+        outAnimation();
         super.onBackPressed();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
@@ -159,5 +192,35 @@ public class AboutMeActivity extends AppCompatActivity {
     protected void onDestroy() {
         handler.removeCallbacksAndMessages(null);
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        inAnimation();
+        if (LoginActivity.loggedAccount.company == null) {
+            intentR = new Intent(this, RegisterRenterActivity.class);
+            boxText.setText("You're not registered as a RENTER!");
+            boxButton.setText("Register Company");
+        }
+        else {
+            intentR = new Intent(this, ManageBusActivity.class);
+            boxText.setText("You're already registered as a RENTER!");
+            boxButton.setText("Manage Bus");
+        }
+    }
+
+    public void inAnimation() {
+        initial.startAnimation(rotate);
+        username.startAnimation(slideInRight);
+        email.startAnimation(slideInRight);
+        balance.startAnimation(slideInRight);
+    }
+
+    public void outAnimation() {
+        initial.startAnimation(rotate);
+        username.startAnimation(slideOutRight);
+        email.startAnimation(slideOutRight);
+        balance.startAnimation(slideOutRight);
     }
 }

@@ -1,7 +1,11 @@
 package com.evanditaWiratamaPutraJBusER.jbus_android.request;
 
 import com.evanditaWiratamaPutraJBusER.jbus_android.model.Account;
+import com.evanditaWiratamaPutraJBusER.jbus_android.model.Renter;
 import com.evanditaWiratamaPutraJBusER.jbus_android.model.BaseResponse;
+import com.evanditaWiratamaPutraJBusER.jbus_android.model.*;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -27,4 +31,31 @@ public interface BaseApiService {
         @Path("id") int id,
         @Query("amount") double amount
     );
+
+    @POST ("account/{id}/registerRenter")
+    Call<BaseResponse<Renter>> registerRenter (
+            @Path("id") int id,
+            @Query("companyName") String companyName,
+            @Query("address") String address,
+            @Query("phoneNumber") String phoneNumber
+    );
+
+    @GET("bus/getMyBus")
+    Call<BaseResponse<List<Bus>>> getMyBus(@Query("accountId") int accountId);
+
+    @POST("bus/create")
+    Call<BaseResponse<Bus>> create(
+            @Query("accountId") int accountId,
+            @Query("name") String name,
+            @Query("capacity") int capacity,
+            @Query("facilities") List<Facility> facilities,
+            @Query("busType") BusType busType,
+            @Query("price") int price,
+            @Query("stationDepartureId") int stationDepartureId,
+            @Query("stationArrivalId") int stationArrivalId);
+
+    @GET("station/getAll")
+    Call<BaseResponse<List<Station>>> getAllStation();
+
+
 }

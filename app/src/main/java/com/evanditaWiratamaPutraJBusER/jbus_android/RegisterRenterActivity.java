@@ -20,17 +20,18 @@ import com.evanditaWiratamaPutraJBusER.jbus_android.model.Account;
 import com.evanditaWiratamaPutraJBusER.jbus_android.model.BaseResponse;
 import com.evanditaWiratamaPutraJBusER.jbus_android.request.BaseApiService;
 import com.evanditaWiratamaPutraJBusER.jbus_android.request.UtilsApi;
+import com.evanditaWiratamaPutraJBusER.jbus_android.model.Renter;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterRenterActivity extends AppCompatActivity {
 
     private LinearLayout linearLayout;
     private Handler handler;
     private int currentImageIndex = 0;
-    private int[] gradientImages = {R.drawable.gradient_bg2, R.drawable.gradient_bg2_3, R.drawable.gradient_bg2_4, R.drawable.gradient_bg2_2};
+    private int[] gradientImages = {R.drawable.gradient_bg4, R.drawable.gradient_bg4_2, R.drawable.gradient_bg4_4, R.drawable.gradient_bg4_3};
     private static final int FADE_DURATION = 3000;
 
     private Animation slideInLeft;
@@ -39,19 +40,17 @@ public class RegisterActivity extends AppCompatActivity {
     private Animation slideOutRight;
 
     private TextView title;
-    private EditText username;
-    private EditText email;
-    private EditText password;
+    private EditText name;
+    private EditText address;
+    private EditText number;
     private Button register;
-    private TextView account;
-    private Button login;
+
     private BaseApiService mApiService;
     private Context ctx;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register_renter);
         getSupportActionBar().hide();
 
         linearLayout = findViewById(R.id.renter_page);
@@ -63,45 +62,19 @@ public class RegisterActivity extends AppCompatActivity {
         slideOutLeft = AnimationUtils.loadAnimation(this, R.anim.slide_out_left);
         slideOutRight = AnimationUtils.loadAnimation(this, R.anim.slide_out_right);
 
-        title = findViewById(R.id.register_title);
-        username = findViewById(R.id.register_username);
-        email = findViewById(R.id.register_email);
-        password = findViewById(R.id.register_password);
-        register = findViewById(R.id.register_register);
-        account = findViewById(R.id.register_account);
-        login = findViewById(R.id.register_login);
+        title = findViewById(R.id.renter_title);
+        name = findViewById(R.id.renter_company);
+        address = findViewById(R.id.renter_address);
+        number = findViewById(R.id.renter_phone_number);
+        register = findViewById(R.id.renter_register);
         mApiService = UtilsApi.getApiService();
         ctx = this;
 
         animationIn();
 
-        login.setOnClickListener(v -> {
-            animationOut();
-
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        });
-
-
         register.setOnClickListener(v -> {
-            handleRegister();
-
+            handleRegisterRenter();
         });
-    }
-
-    public void onBackPressed() {
-
-        animationOut();
-
-        super.onBackPressed();
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        animationIn();
     }
 
     private void animateBackground() {
@@ -129,65 +102,62 @@ public class RegisterActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void moveActivity(Context ctx, Class<?> cls) {
-        Intent intent = new Intent(ctx, cls);
-        startActivity(intent);
+    public void onBackPressed() {
+
+        animationOut();
+
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
-    private void viewToast(Context ctx, String message) {
-        Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show();
-    }
-
-    private void animationIn() {
+    void animationIn() {
         title.startAnimation(slideInLeft);
-        username.startAnimation(slideInRight);
-        email.startAnimation(slideInLeft);
-        password.startAnimation(slideInRight);
+        name.startAnimation(slideInRight);
+        address.startAnimation(slideInLeft);
+        number.startAnimation(slideInRight);
         register.startAnimation(slideInLeft);
-        account.startAnimation(slideInRight);
-        login.startAnimation(slideInLeft);
     }
 
-    private void animationOut() {
+    void animationOut() {
         title.startAnimation(slideOutRight);
-        username.startAnimation(slideOutLeft);
-        email.startAnimation(slideOutRight);
-        password.startAnimation(slideOutLeft);
+        name.startAnimation(slideOutLeft);
+        address.startAnimation(slideOutRight);
+        number.startAnimation(slideOutLeft);
         register.startAnimation(slideOutRight);
-        account.startAnimation(slideOutLeft);
-        login.startAnimation(slideOutRight);
     }
 
-    protected void handleRegister() {
-    // handling empty field
-        String nameS = username.getText().toString();
-        String emailS = email.getText().toString();
-        String passwordS = password.getText().toString();
-        if (nameS.isEmpty() || emailS.isEmpty() || passwordS.isEmpty()) {
+    protected void handleRegisterRenter() {
+        // handling empty field
+        int idS = LoginActivity.loggedAccount.id;
+        String nameS = name.getText().toString();
+        String addressS = address.getText().toString();
+        String numberS = number.getText().toString();
+        if (nameS.isEmpty() || addressS.isEmpty() || numberS.isEmpty()) {
             Toast.makeText(ctx, "Field cannot be empty",
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        mApiService.register(nameS, emailS, passwordS).enqueue(new Callback<BaseResponse<Account>>() {
+        mApiService.registerRenter(idS, nameS, addressS, numberS).enqueue(new Callback<BaseResponse<Renter>>() {
             @Override
-            public void onResponse(Call<BaseResponse<Account>> call, Response<BaseResponse<Account>> response) {
+            public void onResponse(Call<BaseResponse<Renter>> call, Response<BaseResponse<Renter>> response) {
                 // handle the potential 4xx & 5xx error
                 if (!response.isSuccessful()) {
                     Toast.makeText(ctx, "Application error " +
                             response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                BaseResponse<Account> res = response.body();
+                BaseResponse<Renter> res = response.body();
                 // if success finish this activity (back to login activity)
                 Toast.makeText(ctx, res.message, Toast.LENGTH_SHORT).show();
                 if (res.success){
+                    LoginActivity.loggedAccount.company = res.payload;
                     finish();
                 }
 
             }
 
             @Override
-            public void onFailure(Call<BaseResponse<Account>> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<Renter>> call, Throwable t) {
                 Toast.makeText(ctx, "Problem with the server",
                         Toast.LENGTH_SHORT).show();
             }

@@ -5,40 +5,40 @@
     android:id="@+id/renter_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_bg2_2"
+    android:background="@drawable/gradient_bg4"
     android:orientation="vertical"
-    tools:context=".RegisterActivity">
+    tools:context=".RegisterRenterActivity">
 
 
     <TextView
-        android:id="@+id/register_title"
+        android:id="@+id/renter_title"
         android:layout_width="212dp"
         android:layout_height="120dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="150dp"
         android:fontFamily="@font/chau_philomene_one"
-        android:text="Register your Account"
+        android:text="Register your Company"
         android:textColor="#F7FEFF"
         android:textSize="34sp"
-        tools:text="Register your Account" />
+        tools:text="Register your Company" />
 
 
     <EditText
-        android:id="@+id/register_username"
+        android:id="@+id/renter_company"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:background="@android:drawable/divider_horizontal_bright"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:hint="Username"
+        android:hint="Company Name"
         android:inputType="text"
         android:padding="10dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#F7FEFF" />
 
     <EditText
-        android:id="@+id/register_email"
+        android:id="@+id/renter_address"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -46,14 +46,14 @@
         android:background="@android:drawable/divider_horizontal_bright"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
+        android:hint="Address"
+        android:inputType="text"
         android:padding="10dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#F7FEFF" />
 
     <EditText
-        android:id="@+id/register_password"
+        android:id="@+id/renter_phone_number"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -61,14 +61,14 @@
         android:background="@android:drawable/divider_horizontal_bright"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
+        android:hint="Phone Number"
+        android:inputType="number"
         android:padding="10dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#F7FEFF" />
 
     <Button
-        android:id="@+id/register_register"
+        android:id="@+id/renter_register"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -83,35 +83,7 @@
         android:textSize="16sp"
         app:cornerRadius="21dp" />
 
-    <TextView
-        android:id="@+id/register_account"
-        android:layout_width="353dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="50dp"
-        android:gravity="center"
-        android:paddingTop="10dp"
-        android:text="Already have an account?"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF" />
 
-
-    <Button
-        android:id="@+id/register_login"
-
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="208dp"
-        android:layout_height="50dp"
-        android:textAllCaps="false"
-        android:layout_gravity="center"
-        android:backgroundTint="#FBFBFB"
-        android:fontFamily="@font/hammersmith_one"
-        android:paddingHorizontal="20dp"
-        android:text="Login Now"
-        android:textColor="#824AE4"
-        android:textSize="14sp"
-        tools:text="Login Now" />
 
 
 
