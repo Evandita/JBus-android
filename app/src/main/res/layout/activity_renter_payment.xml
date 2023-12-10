@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/renterPayment_page"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg9"
+    android:orientation="vertical"
+    tools:context=".RenterPaymentActivity">
+
+    <TextView
+        android:id="@+id/renterPayment_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="60dp"
+        android:fontFamily="@font/aclonica"
+        android:gravity="center_horizontal"
+        android:paddingBottom="10dp"
+        android:text="Pending Payment"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/black"
+        android:textSize="38dp"
+        android:background="@drawable/rounded_background5" />
+
+    <ListView
+        android:id="@+id/renterPayment_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".RenterPaymentActivity"></ListView>
+
+
+
+</LinearLayout>

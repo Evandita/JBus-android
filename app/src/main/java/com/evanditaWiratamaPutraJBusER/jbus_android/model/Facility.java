@@ -1,11 +1,11 @@
 package com.evanditaWiratamaPutraJBusER.jbus_android.model;
 public enum Facility {
-    WIFI,
     AC,
-    TOILET,
     LUNCH,
-    LARGE_BAGGAGE,
-    ELECTRIC_SOCKET,
+    TOILET,
+    COOL_BOX,
+    WIFI,
     LCD_TV,
-    COOL_BOX
+    ELECTRIC_SOCKET,
+    LARGE_BAGGAGE;
 }

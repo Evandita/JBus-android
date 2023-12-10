@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="15dp"
+        android:background="@drawable/rounded_background2"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_background5"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/renterPaymentView_id"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/hammersmith_one"
+                android:paddingTop="15dp"
+                android:paddingLeft="30dp"
+                android:text="Payment Id"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/hammersmith_one"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
+                android:paddingLeft="30dp"
+                android:text="Buyer Id:"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/renterPaymentView_buyer_id"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/hammersmith_one"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="30dp"
+                android:text="BuyerId"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/hammersmith_one"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
+                android:paddingLeft="30dp"
+                android:text="Seats:"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/renterPaymentView_busSeats"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/hammersmith_one"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="30dp"
+                android:text="busSeats"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/hammersmith_one"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
+                android:paddingLeft="30dp"
+                android:text="Total Price:"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/renterPaymentView_price"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/hammersmith_one"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="30dp"
+                android:text="price"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+
+            <ImageView
+                android:id="@+id/renterPaymentview_accept"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginVertical="15dp"
+                android:layout_marginLeft="50dp"
+                android:padding="10dp"
+                android:src="@drawable/baseline_check_24"
+                android:background="@drawable/rounded_background7"/>
+
+            <ImageView
+                android:id="@+id/renterPaymentview_cancel"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginVertical="15dp"
+                android:layout_marginLeft="70dp"
+                android:padding="10dp"
+                android:src="@drawable/baseline_clear_24"
+                android:background="@drawable/rounded_background6"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -11,7 +11,7 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="15dp"
-        android:background="@drawable/rounded_background"
+        android:background="@drawable/rounded_background2"
         android:layout_gravity="center">
 
         <LinearLayout
@@ -19,163 +19,153 @@
             android:layout_width="320dp"
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/rounded_background3"
+            android:background="@drawable/rounded_background5"
             android:layout_gravity="center">
 
             <TextView
-                android:id="@+id/manageBusView_busName"
-                android:layout_width="270dp"
+                android:id="@+id/buyerPaymentView_id"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/hammersmith_one"
                 android:paddingTop="15dp"
                 android:paddingLeft="30dp"
-                android:text="Nama Bus"
-                android:textColor="@color/purple_700"
+                android:text="Payment Id"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
-
-            <ImageView
-                android:id="@+id/manageBusView_addSchedule"
-                android:layout_width="wrap_content"
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:backgroundTint="#000000"
-                android:src="@drawable/baseline_calendar_month_24"
-                app:tint="@color/purple_700" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="320dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center">
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
                 android:fontFamily="@font/hammersmith_one"
-                android:paddingTop="10dp"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
                 android:paddingLeft="30dp"
-                android:text="Harga Bus:"
+                android:text="Bus:"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:id="@+id/manageBusView_busPrice"
-                android:layout_gravity="center"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/buyerPaymentView_bus"
+                android:gravity="center_vertical"
                 android:fontFamily="@font/hammersmith_one"
-                android:paddingTop="10dp"
-                android:paddingLeft="30dp"
-                android:text="Price"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="30dp"
+                android:text="BusName"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
             <TextView
-                android:layout_width="150dp"
-                android:layout_height="40dp"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/hammersmith_one"
-                android:paddingTop="10dp"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
                 android:paddingLeft="30dp"
-                android:text="Kapasitas Bus:"
+                android:text="Date:"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:id="@+id/manageBusView_busCapacity"
-                android:layout_gravity="center"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/buyerPaymentView_departureDate"
+                android:gravity="center_vertical"
                 android:fontFamily="@font/hammersmith_one"
-                android:paddingTop="10dp"
-                android:paddingLeft="30dp"
-                android:text="Capacity"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="30dp"
+                android:text="departureDate"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
             <TextView
-                android:layout_width="150dp"
-                android:layout_height="40dp"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/hammersmith_one"
-                android:paddingTop="10dp"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
                 android:paddingLeft="30dp"
-                android:text="Tipe Bus:"
+                android:text="Seats:"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:id="@+id/manageBusView_busBusType"
-                android:layout_gravity="center"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/buyerPaymentView_busSeats"
+                android:gravity="center_vertical"
                 android:fontFamily="@font/hammersmith_one"
-                android:paddingTop="10dp"
-                android:paddingLeft="30dp"
-                android:text="BusType"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="30dp"
+                android:text="busSeats"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="320dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center">
             <TextView
-                android:layout_width="150dp"
-                android:layout_height="40dp"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/hammersmith_one"
-                android:paddingTop="10dp"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
                 android:paddingLeft="30dp"
-                android:text="Lokasi Awal:"
+                android:text="Status:"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:id="@+id/manageBusView_busDeparture"
-                android:layout_gravity="center"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/buyerPaymentView_status"
+                android:gravity="center_vertical"
                 android:fontFamily="@font/hammersmith_one"
-                android:paddingTop="10dp"
-                android:paddingLeft="30dp"
-                android:text="Departure"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="30dp"
+                android:text="status"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="320dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center">
             <TextView
-                android:layout_width="150dp"
-                android:layout_height="40dp"
+                android:id="@+id/buyerPaymentView_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/hammersmith_one"
-                android:paddingTop="10dp"
-                android:paddingLeft="30dp"
-                android:text="Lokasi Akhir:"
+                android:fontFamily="@font/alegreya_sc"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="30dp"
+                android:text="Time"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:id="@+id/manageBusView_busArrival"
-                android:layout_gravity="center"
-                android:fontFamily="@font/hammersmith_one"
-                android:paddingTop="10dp"
-                android:paddingLeft="30dp"
-                android:text="Arrival"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="10dp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

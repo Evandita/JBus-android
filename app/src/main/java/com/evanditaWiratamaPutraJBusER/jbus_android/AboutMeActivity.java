@@ -18,6 +18,7 @@ import android.widget.*;
 
 import com.evanditaWiratamaPutraJBusER.jbus_android.model.Account;
 import com.evanditaWiratamaPutraJBusER.jbus_android.model.BaseResponse;
+import com.evanditaWiratamaPutraJBusER.jbus_android.model.Schedule;
 import com.evanditaWiratamaPutraJBusER.jbus_android.request.BaseApiService;
 import com.evanditaWiratamaPutraJBusER.jbus_android.request.UtilsApi;
 
@@ -88,7 +89,7 @@ public class AboutMeActivity extends AppCompatActivity {
         });
 
         box = findViewById(R.id.about_box);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(700,  150);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT,  150);
 
         boxText = new TextView(this);
         boxText.setGravity(Gravity.CENTER);
@@ -198,6 +199,7 @@ public class AboutMeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         inAnimation();
+        balance.setText("IDR " + LoginActivity.loggedAccount.balance);
         if (LoginActivity.loggedAccount.company == null) {
             intentR = new Intent(this, RegisterRenterActivity.class);
             boxText.setText("You're not registered as a RENTER!");
@@ -223,4 +225,6 @@ public class AboutMeActivity extends AppCompatActivity {
         email.startAnimation(slideOutRight);
         balance.startAnimation(slideOutRight);
     }
+
+
 }

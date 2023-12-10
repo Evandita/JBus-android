@@ -1,14 +1,15 @@
 
-<CheckedTextView
+<TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fontFamily="@font/hammersmith_one"
     android:paddingLeft="20dp"
-    android:paddingVertical="10dp"
-    android:textSize="16dp"
+    android:paddingVertical="15dp"
+    android:textSize="14dp"
     android:text="Test"
-    android:background="@drawable/rounded_background"
+    android:textColor="@color/white"
+
     >
-</CheckedTextView>
+</TextView>
 

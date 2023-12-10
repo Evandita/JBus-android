@@ -4,20 +4,21 @@
     android:id="@+id/addbus_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_bg5"
+    android:background="@drawable/gradient_bg9"
     android:orientation="vertical"
     tools:context=".AddBusActivity">
 
     <TextView
-        android:layout_marginTop="30dp"
-        android:padding="10dp"
-        android:gravity="center_horizontal"
         android:id="@+id/addbus_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:fontFamily="@font/aclonica"
-        android:textSize="38dp"
-        android:text="Add Bus" />
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="Add Bus"
+        android:textColor="@color/white"
+        android:textSize="38dp" />
 
     <EditText
         android:id="@+id/addbus_name"
@@ -25,41 +26,41 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="10dp"
-        android:background="@android:drawable/divider_horizontal_bright"
-        android:backgroundTint="#FFFFFF"
         android:hint="Bus Name"
         android:inputType="text"
         android:padding="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#000000" />
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:backgroundTint = "@color/white"/>
+
     <EditText
         android:id="@+id/addbus_capacity"
-        android:layout_marginTop="20dp"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
-        android:background="@android:drawable/divider_horizontal_bright"
-        android:backgroundTint="#FFFFFF"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/white"
         android:hint="Capacity"
         android:inputType="number"
         android:padding="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#000000" />
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
     <EditText
-        android:layout_marginTop="20dp"
         android:id="@+id/addbus_price"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
-        android:background="@android:drawable/divider_horizontal_bright"
-        android:backgroundTint="#FFFFFF"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/white"
         android:hint="Price"
         android:inputType="number"
         android:padding="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#000000" />
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
 
     <LinearLayout
+        android:id="@+id/addbus_bus_type"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,20 +75,24 @@
             android:layout_marginLeft="12dp"
             android:fontFamily="@font/hammersmith_one"
             android:text="Bus Type"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="18dp" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_directions_bus_24"
-            app:tint="@color/black" />
+            app:tint="@color/white" />
         <Spinner
             android:id="@+id/bus_type_dropdown"
+            android:layout_marginLeft="15dp"
             android:layout_width="match_parent"
-            android:layout_height="48dp" />
+            android:layout_height="48dp"
+            android:backgroundTint="@color/white"
+            android:popupBackground="@drawable/rounded_background3"/>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/addbus_departure"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -101,19 +106,24 @@
             android:layout_marginLeft="8dp"
             android:textSize="18dp"
             android:fontFamily="@font/hammersmith_one"
-            android:textColor="@color/black"/>
+            android:textColor="@color/white"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_home_24"
-            app:tint="@color/black" />
+            app:tint="@color/white" />
         <Spinner
             android:id="@+id/departure_station_dropdown"
+            android:layout_marginLeft="15dp"
             android:layout_width="match_parent"
-            android:layout_height="48dp" />
+            android:layout_height="48dp"
+            android:backgroundTint="@color/white"
+            android:popupBackground="@drawable/rounded_background3"
+            />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/addbus_arrival"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -127,21 +137,23 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/hammersmith_one"
             android:text="Arrival"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="18dp" />
         <ImageView
             android:layout_marginLeft="6dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_arrow_forward_24"
-            app:tint="@color/black" />
+            app:tint="@color/white" />
 
         <Spinner
             android:id="@+id/arrival_station_dropdown"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-
-            android:layout="@layout/custom_spinner" />
+            android:layout_marginLeft="15dp"
+            android:backgroundTint="@color/white"
+            android:layout="@layout/custom_spinner"
+            android:popupBackground="@drawable/rounded_background3"/>
     </LinearLayout>
 
     <TextView
@@ -150,9 +162,10 @@
         android:id="@+id/addbus_facilities"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/cagliostro"
+        android:fontFamily="@font/hammersmith_one"
         android:textSize="20dp"
-        android:text="Facilities" />
+        android:textColor="@color/white"
+        android:text="FACILITIES" />
 
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -161,8 +174,9 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/addbus_facilities_1"
             android:layout_gravity="center_horizontal"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="9dp"
             android:orientation="horizontal"
@@ -172,24 +186,41 @@
                 android:id="@+id/addbus_ac"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:text="AC" />
+                android:text="AC"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_background2"
+                android:buttonTint="#FFFFFF"
+                android:fontFamily="@font/hammersmith_one"
+                android:layout_marginHorizontal="10dp"
+                 />
 
             <CheckBox
                 android:id="@+id/addbus_wifi"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:text="WiFi" />
+                android:text="WiFi"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_background2"
+                android:buttonTint="#FFFFFF"
+                android:fontFamily="@font/hammersmith_one"
+                android:layout_marginHorizontal="10dp"/>
 
             <CheckBox
                 android:id="@+id/addbus_toilet"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:text="Toilet" />
+                android:text="Toilet"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_background2"
+                android:buttonTint="#FFFFFF"
+                android:fontFamily="@font/hammersmith_one"
+                android:layout_marginHorizontal="10dp"/>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/addbus_facilities_2"
             android:layout_gravity="center_horizontal"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="9dp"
             android:orientation="horizontal"
@@ -199,22 +230,38 @@
                 android:id="@+id/addbus_lcd"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:text="LCD TV" />
+                android:text="LCD TV"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_background2"
+                android:buttonTint="#FFFFFF"
+                android:fontFamily="@font/hammersmith_one"
+                android:layout_marginHorizontal="10dp"/>
             <CheckBox
                 android:id="@+id/addbus_coolbox"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:text="Coolbox" /><!-- CheckBox for WiFi -->
+                android:text="Coolbox"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_background2"
+                android:buttonTint="#FFFFFF"
+                android:fontFamily="@font/hammersmith_one"
+                android:layout_marginHorizontal="10dp"/>
             <CheckBox
                 android:id="@+id/addbus_lunch"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:text="Lunch" /><!-- CheckBox for WiFi -->
+                android:text="Lunch"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_background2"
+                android:buttonTint="#FFFFFF"
+                android:fontFamily="@font/hammersmith_one"
+                android:layout_marginHorizontal="10dp"/>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/addbus_facilities_3"
             android:layout_gravity="center_horizontal"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="9dp"
             android:orientation="horizontal"
@@ -224,12 +271,22 @@
                 android:id="@+id/addbus_baggage"
                 android:layout_width="150dp"
                 android:layout_height="30dp"
-                android:text="Large Baggage" />
+                android:text="Large Baggage"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_background2"
+                android:buttonTint="#FFFFFF"
+                android:fontFamily="@font/hammersmith_one"
+                android:layout_marginHorizontal="20dp"/>
             <CheckBox
                 android:id="@+id/addbus_electric"
                 android:layout_width="150dp"
                 android:layout_height="30dp"
-                android:text="Electric Socket" />
+                android:text="Electric Socket"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_background2"
+                android:buttonTint="#FFFFFF"
+                android:fontFamily="@font/hammersmith_one"
+                android:layout_marginHorizontal="20dp"/>
 
 
         </LinearLayout>
@@ -243,13 +300,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:backgroundTint="@color/black"
-        android:fontFamily="@font/cagliostro"
+
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/hammersmith_one"
         android:paddingHorizontal="16dp"
         android:paddingVertical="12dp"
         android:text="ADD"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/purple_700"
         android:textSize="16sp"
         app:cornerRadius="21dp" />
 

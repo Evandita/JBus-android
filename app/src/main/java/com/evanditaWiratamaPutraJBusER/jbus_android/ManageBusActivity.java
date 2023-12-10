@@ -13,6 +13,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
@@ -21,6 +24,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.evanditaWiratamaPutraJBusER.jbus_android.databinding.ActivityMainBinding;
+import com.evanditaWiratamaPutraJBusER.jbus_android.databinding.ActivityManageBusBinding;
 import com.evanditaWiratamaPutraJBusER.jbus_android.model.Account;
 import com.evanditaWiratamaPutraJBusER.jbus_android.model.BaseResponse;
 import com.evanditaWiratamaPutraJBusER.jbus_android.model.Bus;
@@ -43,9 +48,9 @@ public class ManageBusActivity extends AppCompatActivity {
     private int currentImageIndex;
     private int[] gradientImages = {R.drawable.gradient_bg9, R.drawable.gradient_bg9_2, R.drawable.gradient_bg9_4, R.drawable.gradient_bg9_3};
     private static final int FADE_DURATION = 3000;
-
     private Button[] btns;
     private int currentPage = 0;
+    private int prevPage = 0;
     private int pageSize = 5; // kalian dapat bereksperimen dengan field ini
     private int listSize;
     private int noOfPages;
@@ -55,9 +60,18 @@ public class ManageBusActivity extends AppCompatActivity {
     private ListView busListView = null;
     private HorizontalScrollView pageScroll = null;
     private BaseApiService mApiService;
-    private Context ctx;
-    private BusArrayAdapter adapter;
+    public static Context ctx;
+    private ManageBusArrayAdapter adapter;
     final private int addbus_menu_id = R.id.addbus_button;
+    public static Bus busSelected;
+
+    private Animation slideInLeft;
+    private Animation slideInRight;
+    private Animation slideOutLeft;
+    private Animation slideOutRight;
+    private Animation fadeIn, fadeOut;
+    private Animation rotate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +82,14 @@ public class ManageBusActivity extends AppCompatActivity {
         handler = new Handler();
         animateBackground();
 
+        slideInLeft = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
+        slideInRight = AnimationUtils.loadAnimation(this, R.anim.slide_in_right);
+        slideOutLeft = AnimationUtils.loadAnimation(this, R.anim.slide_out_left);
+        slideOutRight = AnimationUtils.loadAnimation(this, R.anim.slide_out_right);
+        fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+        rotate = AnimationUtils.loadAnimation(this, R.anim.rotate);
+
         mApiService = UtilsApi.getApiService();
         ctx = this;
 
@@ -76,28 +98,35 @@ public class ManageBusActivity extends AppCompatActivity {
         nextButton = findViewById(R.id.managebus_next_page);
         pageScroll = findViewById(R.id.managebus_page_number_scroll);
         busListView = findViewById(R.id.managebus_listView);
+
         // membuat sample list
-        adapter = new BusArrayAdapter((Context) this, listBus);
         handleGetMyBus();
 
-        /*
-        listSize = listBus.size();
-        // construct the footer
-        paginationFooter();
-        goToPage(currentPage);
+        prevButton.startAnimation(slideInLeft);
+        nextButton.startAnimation(slideInRight);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                    listSize = listBus.size();
+                    // construct the footer
+                    paginationFooter();
+                    goToPage(currentPage);
+            }
+        }, 500);
+
         // listener untuk button prev dan button
         prevButton.setOnClickListener(v -> {
+            prevPage = currentPage;
             currentPage = currentPage != 0? currentPage-1 : 0;
             goToPage(currentPage);
         });
         nextButton.setOnClickListener(v -> {
+            prevPage = currentPage;
             currentPage = currentPage != noOfPages -1? currentPage+1 : currentPage;
             goToPage(currentPage);
         });
-
-         */
-
-
 
     }
 
@@ -131,6 +160,7 @@ public class ManageBusActivity extends AppCompatActivity {
         val = val == 0 ? 0:1;
         noOfPages = listSize / pageSize + val;
         LinearLayout ll = findViewById(R.id.managebus_btn_layout);
+        ll.removeAllViews();
         btns = new Button[noOfPages];
         if (noOfPages <= 6) {
             ((FrameLayout.LayoutParams) ll.getLayoutParams()).gravity = Gravity.CENTER;
@@ -143,12 +173,17 @@ public class ManageBusActivity extends AppCompatActivity {
             btns[i].setTextColor(getResources().getColor(R.color.white));
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(100,
                     100);
+            btns[i].startAnimation(fadeIn);
             ll.addView(btns[i], lp);
+
             final int j = i;
+
             btns[j].setOnClickListener(v -> {
+                prevPage = currentPage;
                 currentPage = j;
                 goToPage(j);
             });
+
         }
     }
 
@@ -157,6 +192,7 @@ public class ManageBusActivity extends AppCompatActivity {
             if (i == index) {
                 btns[index].setBackgroundDrawable(getResources().getDrawable(R.drawable.circle));
                 btns[i].setTextColor(getResources().getColor(android.R.color.white));
+                btns[i].startAnimation(rotate);
                 scrollToItem(btns[index]);
                 viewPaginatedList(listBus, currentPage);
             } else {
@@ -180,9 +216,45 @@ public class ManageBusActivity extends AppCompatActivity {
         // menggunakan array adapter.
         ;
 
+        if (currentPage > prevPage) {
+            busListView.startAnimation(slideOutLeft);
+        }
+        else if (currentPage < prevPage) {
+            busListView.startAnimation(slideOutRight);
+        }
+        else {
+            busListView.startAnimation(fadeOut);
+        }
 
-        adapter = new BusArrayAdapter((Context) this, paginatedList);
-        busListView.setAdapter(adapter);
+        adapter = new ManageBusArrayAdapter((Context) this, paginatedList);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (currentPage > prevPage) {
+                    busListView.startAnimation(slideInRight);
+                }
+                else if (currentPage < prevPage) {
+                    busListView.startAnimation(slideInLeft);
+                }
+                else {
+                    busListView.startAnimation(fadeIn);
+                }
+                busListView.setAdapter(adapter);
+                busListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        prevPage = currentPage;
+                        Intent intent = new Intent(ctx, BusScheduleActivity.class);
+                        busSelected = listBus.get((currentPage) * pageSize + i);
+                        startActivity(intent);
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+                    }
+                });
+
+            }
+        }, 1000);
 
     }
 
@@ -208,10 +280,7 @@ public class ManageBusActivity extends AppCompatActivity {
                     for (Bus i : tmp) {
                         listBus.add(i);
                     }
-
-                    busListView.setAdapter(adapter);
                 }
-                Toast.makeText(ctx, res.message, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -248,5 +317,25 @@ public class ManageBusActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         handleGetMyBus();
+        prevButton.startAnimation(slideInLeft);
+        nextButton.startAnimation(slideInRight);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                listSize = listBus.size();
+                // construct the footer
+                paginationFooter();
+                goToPage(currentPage);
+            }
+        }, 500);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

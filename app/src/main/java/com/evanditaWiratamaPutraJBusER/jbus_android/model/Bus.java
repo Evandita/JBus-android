@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bus extends Serializable {
+public class Bus extends Serializable{
     public int accountId;
     public String name;
     public List<Facility> facilities;
@@ -22,6 +22,14 @@ public class Bus extends Serializable {
         for (int i = 1; i <= size; i++) {
             Bus bus = new Bus();
             bus.name = "Bus " + i;
+            bus.price = new Price();
+            bus.price.price = 10000 + i;
+            bus.capacity = 10 + i;
+            bus.busType = BusType.REGULER;
+            bus.departure = new Station();
+            bus.departure.stationName = "Terminal Jatijajar";
+            bus.arrival = new Station();
+            bus.arrival.stationName = "Terminal Manggarai";
             busList.add(bus);
         }
 

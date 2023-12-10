@@ -3,6 +3,7 @@ package com.evanditaWiratamaPutraJBusER.jbus_android;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.*;
 import android.graphics.drawable.*;
+import android.util.Log;
 import android.widget.*;
 import android.os.*;
 import android.view.animation.*;
@@ -119,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<BaseResponse<Account>> call, Throwable t) {
+                Log.e("NetworkError", "Error: " + t.getMessage(), t);
                 Toast.makeText(ctx, "Problem with the server",
                         Toast.LENGTH_SHORT).show();
             }

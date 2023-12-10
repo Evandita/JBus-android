@@ -5,9 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.*;
@@ -31,6 +36,12 @@ import retrofit2.Response;
 
 
 public class AddBusActivity extends AppCompatActivity {
+
+    private LinearLayout linearLayout;
+    private Handler handler;
+    private int currentImageIndex;
+    private int[] gradientImages = {R.drawable.gradient_bg9, R.drawable.gradient_bg9_2,R.drawable.gradient_bg9_4, R.drawable.gradient_bg9_3};
+    private static final int FADE_DURATION = 2000;
     private BusType[] busType = BusType.values();
     private BusType selectedBusType;
     private Spinner busTypeSpinner;
@@ -43,9 +54,16 @@ public class AddBusActivity extends AppCompatActivity {
     private BaseApiService mApiService;
     private Context ctx;
 
+    private TextView title,facilitiesL;
+    LinearLayout busTypeL, departureL, arrivalL,
+             facilities_1L, facilities_2L, facilities_3L;
     private EditText busName, capacity, price;
     private CheckBox acCheckBox, wifiCheckBox, toiletCheckBox, lcdCheckBox,
             coolboxCheckBox, lunchCheckBox, baggageCheckBox, electricCheckBox;
+    private Animation slideInLeft;
+    private Animation slideInRight;
+    private Animation slideOutLeft;
+    private Animation slideOutRight;
     private List<Facility> selectedFacilities = new ArrayList<>();
     private Button add;
 
@@ -55,9 +73,24 @@ public class AddBusActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_bus);
         getSupportActionBar().hide();
 
+        currentImageIndex = 0;
+        linearLayout = findViewById(R.id.addbus_page);
+        handler = new Handler();
+        animateBackground();
+
+
         busName = findViewById(R.id.addbus_name);
         capacity = findViewById(R.id.addbus_capacity);
         price = findViewById(R.id.addbus_price);
+        title = findViewById(R.id.addbus_title);
+        busTypeL = findViewById(R.id.addbus_bus_type);
+        departureL = findViewById(R.id.addbus_departure);
+        arrivalL = findViewById(R.id.addbus_arrival);
+        facilitiesL = findViewById(R.id.addbus_facilities);
+        facilities_1L = findViewById(R.id.addbus_facilities_1);
+        facilities_2L = findViewById(R.id.addbus_facilities_2);
+        facilities_3L = findViewById(R.id.addbus_facilities_3);
+
 
         acCheckBox = findViewById(R.id.addbus_ac);
         wifiCheckBox = findViewById(R.id.addbus_wifi);
@@ -68,34 +101,42 @@ public class AddBusActivity extends AppCompatActivity {
         baggageCheckBox = findViewById(R.id.addbus_baggage);
         electricCheckBox = findViewById(R.id.addbus_electric);
 
+        slideInLeft = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
+        slideInRight = AnimationUtils.loadAnimation(this, R.anim.slide_in_right);
+        slideOutLeft = AnimationUtils.loadAnimation(this, R.anim.slide_out_left);
+        slideOutRight = AnimationUtils.loadAnimation(this, R.anim.slide_out_right);
+
         add = findViewById(R.id.addbus_add);
 
         mApiService = UtilsApi.getApiService();
         ctx = this;
         selectedFacilities.clear();
 
-        if (acCheckBox.isChecked()) { selectedFacilities.add(Facility.AC);}
-        if (wifiCheckBox.isChecked()) { selectedFacilities.add(Facility.WIFI);}
-        if (toiletCheckBox.isChecked()) { selectedFacilities.add(Facility.TOILET);}
-        if (lcdCheckBox.isChecked()) { selectedFacilities.add(Facility.LCD_TV);}
-        if (coolboxCheckBox.isChecked()) { selectedFacilities.add(Facility.COOL_BOX);}
-        if (lunchCheckBox.isChecked()) { selectedFacilities.add(Facility.LUNCH);}
-        if (baggageCheckBox.isChecked()) { selectedFacilities.add(Facility.LARGE_BAGGAGE);}
-        if (electricCheckBox.isChecked()) { selectedFacilities.add(Facility.ELECTRIC_SOCKET);}
-
 
         busTypeSpinner = this.findViewById(R.id.bus_type_dropdown);
         departureSpinner = this.findViewById(R.id.departure_station_dropdown);
         arrivalSpinner = this.findViewById(R.id.arrival_station_dropdown);
-        ArrayAdapter adBus = new ArrayAdapter(this, android.R.layout.simple_list_item_1, busType);
-        adBus.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter adBus = new ArrayAdapter(this, R.layout.custom_spinner, busType);
+        adBus.setDropDownViewResource(R.layout.custom_spinner_dropdown);
         busTypeSpinner.setAdapter(adBus);
         // menambahkan OISL (OnItemSelectedListener) untuk spinner
         busTypeSpinner.setOnItemSelectedListener(busTypeOISL);
 
         handleGetAllStation();
 
+        animationIn();
+
         add.setOnClickListener(v -> {
+
+            if (acCheckBox.isChecked()) { selectedFacilities.add(Facility.AC);}
+            if (wifiCheckBox.isChecked()) { selectedFacilities.add(Facility.WIFI);}
+            if (toiletCheckBox.isChecked()) { selectedFacilities.add(Facility.TOILET);}
+            if (lcdCheckBox.isChecked()) { selectedFacilities.add(Facility.LCD_TV);}
+            if (coolboxCheckBox.isChecked()) { selectedFacilities.add(Facility.COOL_BOX);}
+            if (lunchCheckBox.isChecked()) { selectedFacilities.add(Facility.LUNCH);}
+            if (baggageCheckBox.isChecked()) { selectedFacilities.add(Facility.LARGE_BAGGAGE);}
+            if (electricCheckBox.isChecked()) { selectedFacilities.add(Facility.ELECTRIC_SOCKET);}
+
 
             handleBusCreate();
 
@@ -106,7 +147,7 @@ public class AddBusActivity extends AppCompatActivity {
     AdapterView.OnItemSelectedListener busTypeOISL = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+            ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
             // mengisi field selectedBusType sesuai dengan item yang dipilih
             selectedBusType = busType[position];
         }
@@ -118,7 +159,7 @@ public class AddBusActivity extends AppCompatActivity {
     AdapterView.OnItemSelectedListener deptOISL = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+            ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
             // mengisi field selectedBusType sesuai dengan item yang dipilih
             selectedDeptStationID = stationList.get(position).id;
         }
@@ -130,7 +171,7 @@ public class AddBusActivity extends AppCompatActivity {
     AdapterView.OnItemSelectedListener arrOISL = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+            ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
             // mengisi field selectedBusType sesuai dengan item yang dipilih
             selectedArrStationID = stationList.get(position).id;
         }
@@ -159,17 +200,17 @@ public class AddBusActivity extends AppCompatActivity {
                     for (Station i : stationList) {
                         stationName.add(i.stationName);
                     }
-                    ArrayAdapter deptBus = new ArrayAdapter(ctx, android.R.layout.simple_list_item_1, stationName);
-                    deptBus.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+                    ArrayAdapter deptBus = new ArrayAdapter(ctx, R.layout.custom_spinner, stationName);
+                    deptBus.setDropDownViewResource(R.layout.custom_spinner_dropdown);
                     departureSpinner.setAdapter(deptBus);
                     departureSpinner.setOnItemSelectedListener(deptOISL);
 
-                    ArrayAdapter arrBus = new ArrayAdapter(ctx, android.R.layout.simple_list_item_1, stationName);
-                    arrBus.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+                    ArrayAdapter arrBus = new ArrayAdapter(ctx, R.layout.custom_spinner, stationName);
+                    arrBus.setDropDownViewResource(R.layout.custom_spinner_dropdown);
                     arrivalSpinner.setAdapter(arrBus);
                     arrivalSpinner.setOnItemSelectedListener(arrOISL);
                 }
-                Toast.makeText(ctx, res.message, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ctx, res.message, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -197,12 +238,12 @@ public class AddBusActivity extends AppCompatActivity {
         int priceI = Integer.parseInt(priceS);
 
 
-        mApiService.create(idS, nameS, capacityI, selectedFacilities, selectedBusType, priceI, selectedDeptStationID, selectedArrStationID).enqueue(new Callback<BaseResponse<Bus>>() {
+        mApiService.create(idS, nameS, selectedFacilities, priceI, capacityI, selectedBusType, selectedDeptStationID, selectedArrStationID).enqueue(new Callback<BaseResponse<Bus>>() {
             @Override
             public void onResponse(Call<BaseResponse<Bus>> call, Response<BaseResponse<Bus>> response) {
 
                 if (!response.isSuccessful()) {
-                    /*
+
                     Log.e("MyApp", "Application error: " + response.code());
                     Toast.makeText(ctx, "Application error " +
                             response.code(), Toast.LENGTH_SHORT).show();
@@ -212,19 +253,17 @@ public class AddBusActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                     */
+
                     return;
                 }
-
-
                 BaseResponse<Bus> res = response.body();
-
-                // if success finish this activity (back to login activity)
                 if(res.success){
-                    Toast.makeText(ctx, res.message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ctx, "Bus berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                    animationOut();
                     finish();
+
                 }
-                Toast.makeText(ctx, res.message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ctx, "Bus gagal ditambahkan", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -234,6 +273,75 @@ public class AddBusActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void animateBackground() {
+        Drawable currentDrawable = getResources().getDrawable(gradientImages[currentImageIndex]);
+        Drawable nextDrawable = getResources().getDrawable(gradientImages[(currentImageIndex + 1) % gradientImages.length]);
+
+        TransitionDrawable transitionDrawable = new TransitionDrawable(new Drawable[]{currentDrawable, nextDrawable});
+        //transitionDrawable.setCrossFadeEnabled(true);
+        transitionDrawable.startTransition(FADE_DURATION);
+
+        linearLayout.setBackground(transitionDrawable);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                currentImageIndex = (currentImageIndex + 1) % gradientImages.length;
+
+                animateBackground();
+            }
+        }, FADE_DURATION);
+    }
+
+    public void animationOut(){
+
+        title.startAnimation(slideOutRight);
+
+        busName.startAnimation(slideOutLeft);
+        capacity.startAnimation(slideOutRight);
+        price.startAnimation(slideOutLeft);
+
+        busTypeL.startAnimation(slideOutRight);
+        departureL.startAnimation(slideOutLeft);
+        arrivalL.startAnimation(slideOutRight);
+
+        facilitiesL.startAnimation(slideOutLeft);
+        facilities_1L.startAnimation(slideOutRight);
+        facilities_2L.startAnimation(slideOutLeft);
+        facilities_3L.startAnimation(slideOutRight);
+
+        add.startAnimation(slideOutLeft);
+
+    }
+
+    public void animationIn () {
+        title.startAnimation(slideInLeft);
+
+        busName.startAnimation(slideInRight);
+        capacity.startAnimation(slideInLeft);
+        price.startAnimation(slideInRight);
+
+        busTypeL.startAnimation(slideInLeft);
+        departureL.startAnimation(slideInRight);
+        arrivalL.startAnimation(slideInLeft);
+
+        facilitiesL.startAnimation(slideInRight);
+        facilities_1L.startAnimation(slideInLeft);
+        facilities_2L.startAnimation(slideInRight);
+        facilities_3L.startAnimation(slideInLeft);
+
+        add.startAnimation(slideInRight);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        animationOut();
+
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
 }

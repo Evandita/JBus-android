@@ -16,6 +16,21 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".RenterPaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BuyerPaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BusDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BusPaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BusScheduleActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddBusActivity"
             android:exported="false" />
         <activity
